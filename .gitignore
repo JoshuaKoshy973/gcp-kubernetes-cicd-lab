@@ -1,0 +1,36 @@
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+*.local
+
+# Google Cloud credentials and service-account keys
+*.json
+!package.json
+!package-lock.json
+!tsconfig.json
+*-key.json
+credentials.json
+gcloud-credentials*
+
+# Terraform state and local files
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+dist/
+build/
+*.egg-info/
+
+# Local tooling and OS files
+.DS_Store
+.idea/
+.vscode/
+*.log
