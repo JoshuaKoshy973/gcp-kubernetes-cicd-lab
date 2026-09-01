@@ -6,7 +6,7 @@ app = Flask(__name__)
 def home():
     return jsonify(
         message="Hello from GCP Kubernetes CI/CD Lab",
-        version="v1"
+        version="v2"
     )
 
 @app.route("/health")
@@ -15,7 +15,7 @@ def health():
 
 @app.route("/version")
 def version():
-    return jsonify(version="v1")
+    return jsonify(version="v2")
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080)
