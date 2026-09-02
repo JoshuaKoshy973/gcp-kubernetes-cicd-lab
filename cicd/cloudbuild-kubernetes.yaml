@@ -8,11 +8,11 @@ steps:
         CURRENT_IMAGE=$(kubectl get deployment gcp-cicd-app \
           --output=jsonpath='{.spec.template.spec.containers[0].image}')
 
-        echo "Preserving current image: ${CURRENT_IMAGE}"
+        echo "Preserving current image: $${CURRENT_IMAGE}"
 
         gke-deploy run \
           --filename=kubernetes/ \
-          --image="${CURRENT_IMAGE}" \
+          --image="$${CURRENT_IMAGE}" \
           --location=us-central1-a \
           --cluster=gcp-cicd-cluster
 
