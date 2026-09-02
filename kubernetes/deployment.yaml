@@ -5,7 +5,6 @@ metadata:
   name: gcp-cicd-app
 
 spec:
-  replicas: 6
 
   selector:
     matchLabels:
