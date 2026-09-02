@@ -16,3 +16,6 @@ steps:
       - '--filename=kubernetes/service.yaml'
       - '--location=us-central1-a'
       - '--cluster=gcp-cicd-cluster'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
