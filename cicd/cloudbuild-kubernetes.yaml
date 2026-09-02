@@ -1,11 +1,20 @@
 steps:
   - name: 'gcr.io/cloud-builders/gke-deploy'
     id: 'Apply Kubernetes configuration'
+    entrypoint: 'bash'
     args:
-      - 'run'
-      - '--filename=kubernetes/'
-      - '--location=us-central1-a'
-      - '--cluster=gcp-cicd-cluster'
+      - '-c'
+      - |
+        CURRENT_IMAGE=$(kubectl get deployment gcp-cicd-app \
+          --output=jsonpath='{.spec.template.spec.containers[0].image}')
+
+        echo "Preserving current image: ${CURRENT_IMAGE}"
+
+        gke-deploy run \
+          --filename=kubernetes/ \
+          --image="${CURRENT_IMAGE}" \
+          --location=us-central1-a \
+          --cluster=gcp-cicd-cluster
 
 options:
   logging: CLOUD_LOGGING_ONLY
