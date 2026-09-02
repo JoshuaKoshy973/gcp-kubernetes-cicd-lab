@@ -1,0 +1,40 @@
+steps:
+  # 1. Test the application
+  - name: 'python:3.13-slim'
+    id: 'Test application'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        pip install --no-cache-dir -r app/requirements.txt
+        cd app
+        python -m unittest test_app.py
+
+  # 2. Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'Build image'
+    args:
+      - 'build'
+      - '-t'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/gcp-cicd-images/gcp-cicd-app:$COMMIT_SHA'
+      - './app'
+
+  # 3. Push the image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'Push image'
+    args:
+      - 'push'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/gcp-cicd-images/gcp-cicd-app:$COMMIT_SHA'
+
+  # 4. Deploy the new image to GKE
+  - name: 'gcr.io/cloud-builders/gke-deploy'
+    id: 'Deploy to GKE'
+    args:
+      - 'run'
+      - '--filename=kubernetes/deployment.yaml'
+      - '--image=us-central1-docker.pkg.dev/$PROJECT_ID/gcp-cicd-images/gcp-cicd-app:$COMMIT_SHA'
+      - '--location=us-central1-a'
+      - '--cluster=gcp-cicd-cluster'
+
+images:
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/gcp-cicd-images/gcp-cicd-app:$COMMIT_SHA'

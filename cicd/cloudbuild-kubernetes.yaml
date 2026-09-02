@@ -1,0 +1,18 @@
+steps:
+  # 1. Apply the Kubernetes Deployment
+  - name: 'gcr.io/cloud-builders/gke-deploy'
+    id: 'Apply deployment'
+    args:
+      - 'run'
+      - '--filename=kubernetes/deployment.yaml'
+      - '--location=us-central1-a'
+      - '--cluster=gcp-cicd-cluster'
+
+  # 2. Apply the Kubernetes Service
+  - name: 'gcr.io/cloud-builders/gke-deploy'
+    id: 'Apply service'
+    args:
+      - 'run'
+      - '--filename=kubernetes/service.yaml'
+      - '--location=us-central1-a'
+      - '--cluster=gcp-cicd-cluster'
