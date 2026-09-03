@@ -14,7 +14,7 @@ The application is intentionally simple so the project can focus on infrastructu
 - Build a Cloud Build CI/CD workflow.
 - Use Cloud Logging, Cloud Monitoring, and alerts to investigate workload behavior.
 
-## Planned architecture
+## Final architecture
 
 ```mermaid
 flowchart LR
@@ -50,14 +50,23 @@ Google Cloud Platform, IAM, service accounts, VPC, Docker, Artifact Registry, Go
 6. Kubernetes Service and networking
 7. Scaling and self-healing
 8. Rolling update from v1 to v2
-9. Cloud Build CI/CD
-10. Cloud Logging and Cloud Monitoring
-11. Troubleshooting scenarios
-12. Final architecture, documentation, and portfolio cleanup
+9. GitHub and Cloud Build CI/CD
+10. Production Kubernetes behavior: health probes, resources, and HPA
+11. Cloud Logging, Cloud Monitoring, and alerting
+12. Layered troubleshooting incidents
+13. Final documentation and portfolio cleanup
 
 ## Current progress
 
 The core lab is complete. It includes the GCP foundation, Flask application, Docker image, Artifact Registry, Standard GKE cluster, Kubernetes Deployment and Service, scaling and self-healing tests, rolling updates, Cloud Build CI/CD, health probes, resource management, HPA, logging, monitoring, alerting, and layered troubleshooting incidents.
+
+## Key outcomes and what I learned
+
+- Kubernetes CPU requests influence scheduling, while limits govern runtime usage; raw VM capacity is not the same as allocatable cluster capacity.
+- Readiness controls whether a Pod receives traffic, while liveness controls whether its container should be restarted.
+- Deployments maintain workload state, while HPAs independently adjust replica count from CPU request utilization.
+- `kubectl` reports and changes cluster state, while the node kubelet executes probes and manages container lifecycle.
+- Git, Cloud Build, Artifact Registry, and Kubernetes must share a clear source of truth; direct cluster changes can otherwise create image and configuration drift.
 
 ## Repository structure
 
