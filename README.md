@@ -1,8 +1,8 @@
 # GCP Kubernetes CI/CD Lab
 
-This portfolio project is a hands-on Google Cloud infrastructure and DevOps lab focused on the path from application source code to a containerized workload running on Google Kubernetes Engine (GKE).
+This portfolio project is a hands-on Google Cloud infrastructure and DevOps lab that follows a small Flask application from source code to a containerized workload running on Google Kubernetes Engine (GKE).
 
-The application will remain intentionally simple. The primary focus is GCP foundations, IAM, networking, containers, Kubernetes operations, CI/CD, observability, and troubleshooting.
+The application is intentionally simple so the project can focus on infrastructure, operations, automation, observability, and troubleshooting. The completed work demonstrates the full path from GitHub through Cloud Build and Artifact Registry to a production-style Kubernetes workload.
 
 ## Learning objectives
 
@@ -34,11 +34,13 @@ flowchart LR
     GKE --> Monitoring[Cloud Monitoring and Alerts]
 ```
 
+The network model separates infrastructure addresses from Kubernetes-managed ranges: GKE nodes use the subnet primary range (`10.10.1.0/24`), Pods use the `gke-pods` secondary range (`10.20.0.0/20`), and Service ClusterIPs use the `gke-services` secondary range (`10.30.0.0/24`).
+
 ## Technologies
 
 Google Cloud Platform, IAM, service accounts, VPC, Docker, Artifact Registry, Google Kubernetes Engine, Kubernetes, Cloud Build, Cloud Logging, Cloud Monitoring, Python, and GitHub.
 
-## Project phases
+## Completed project phases
 
 1. GCP foundation
 2. Simple Python application and Docker
@@ -55,7 +57,7 @@ Google Cloud Platform, IAM, service accounts, VPC, Docker, Artifact Registry, Go
 
 ## Current progress
 
-The repository scaffold has been initialized. Each phase will be documented with the configuration, validation evidence, and troubleshooting notes created during the lab.
+The core lab is complete. It includes the GCP foundation, Flask application, Docker image, Artifact Registry, Standard GKE cluster, Kubernetes Deployment and Service, scaling and self-healing tests, rolling updates, Cloud Build CI/CD, health probes, resource management, HPA, logging, monitoring, alerting, and layered troubleshooting incidents.
 
 ## Repository structure
 
@@ -70,10 +72,16 @@ docs/notes/                  Working notes and reference material
 screenshots/                 Evidence organized by project phase
 ```
 
-## Screenshots and documentation
+## Evidence and documentation
 
-Screenshots will be added as each phase is completed. Each useful screenshot will include a concise caption describing what it demonstrates, with sensitive values removed or excluded.
+The repository is organized so the screenshots tell the same story as the configuration and runbooks:
+
+- [Architecture documentation](docs/architecture/README.md) explains the resource and traffic model.
+- [Setup guides](docs/setup-guides/README.md) describe the build sequence and validation approach.
+- [Troubleshooting documentation](docs/troubleshooting/README.md) records the investigation method and incident outcomes.
+- [Operational notes](docs/notes/README.md) capture the Kubernetes, IAM, CI/CD, and observability mental models developed during the lab.
+- [Screenshots](screenshots/README.md) provide phase-based evidence from the GCP Console, terminal, Kubernetes, Cloud Build, and Monitoring.
 
 ## Security and secrets
 
-Credentials, service-account keys, API keys, access tokens, passwords, local environment files, and sensitive Terraform state must never be committed. Future integrations will use environment variables, GitHub Secrets, Google Secret Manager, Workload Identity, or another appropriate secure mechanism.
+Credentials, service-account keys, API keys, access tokens, passwords, local environment files, and sensitive Terraform state must never be committed. The lab uses a dedicated deployment service account and keeps application image identity separate from human credentials. Future integrations should use environment variables, GitHub Secrets, Google Secret Manager, Workload Identity, or another appropriate secure mechanism.
